@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Control de Gastos</title>
+</head>
+<body>
+  <div class="container">
+    <h1>💰 <span>Control de Gastos</span></h1>
+
+    <div id="message" class="message"></div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="mostrarTab('nuevo-gasto')">➕ Nuevo Gasto</button>
+      <button class="tab" onclick="mostrarTab('ingresos')">💵 Ingresos</button>
+      <button class="tab" onclick="mostrarTab('resumen')">📊 Resumen</button>
+    </div>
+
+    <!-- TAB 1: Nuevo Gasto -->
+    <div id="nuevo-gasto" class="tab-content active">
+      <h2>Registrar Nuevo Gasto</h2>
+      <form id="formGasto" onsubmit="registrarGasto(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>📅 Fecha</label>
+            <input type="date" id="fecha" required>
+          </div>
+          <div class="form-group">
+            <label>💰 Monto ($)</label>
+            <input type="number" id="monto" step="0.01" min="0.01" placeholder="0.00" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>📂 Categoría</label>
+            <select id="categoria" required onchange="actualizarSubcategorias()">
+              <option value="">Seleccionar categoría</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>📁 Subcategoría</label>
+            <select id="subcategoria">
+              <option value="">General</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>📝 Descripción</label>
+          <input type="text" id="descripcion" placeholder="Ej: Compré pan y leche" required>
+        </div>
+
+        <button type="submit" class="btn">💾 Guardar Gasto</button>
+      </form>
+    </div>
+
+    <!-- TAB 2: Ingresos -->
+    <div id="ingresos" class="tab-content">
+      <h2>Registrar Ingresos Mensuales</h2>
+      <form id="formIngreso" onsubmit="registrarIngreso(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>📅 Mes</label>
+            <select id="mesIngreso" required>
+              <option value="1">Enero</option>
+              <option value="2">Febrero</option>
+              <option value="3">Marzo</option>
+              <option value="4">Abril</option>
+              <option value="5">Mayo</option>
+              <option value="6">Junio</option>
+              <option value="7">Julio</option>
+              <option value="8">Agosto</option>
+              <option value="9">Septiembre</option>
+              <option value="10">Octubre</option>
+              <option value="11">Noviembre</option>
+              <option value="12">Diciembre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>📆 Año</label>
+            <select id="anioIngreso">
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
+              <option value="2028">2028</option>
+              <option value="2029">2029</option>
+              <option value="2030">2030</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>💰 Ingreso del Mes ($)</label>
+          <input type="number" id="montoIngreso" step="0.01" min="0" placeholder="0.00" required>
+        </div>
+
+        <button type="submit" class="btn btn-success">💵 Guardar Ingreso</button>
+      </form>
+    </div>
+
+    <!-- TAB 3: Resumen -->
+    <div id="resumen" class="tab-content">
+      <h2>📊 Resumen Mensual</h2>
+
+      <div class="form-row" style="margin-bottom: 20px;">
+        <div class="form-group">
+          <label>📅 Mes</label>
+          <select id="mesResumen" onchange="cargarResumen()">
+            <option value="1">Enero</option>
+            <option value="2">Febrero</option>
+            <option value="3">Marzo</option>
+            <option value="4">Abril</option>
+            <option value="5">Mayo</option>
+            <option value="6">Junio</option>
+            <option value="7">Julio</option>
+            <option value="8">Agosto</option>
+            <option value="9">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>📆 Año</label>
+          <select id="anioResumen" onchange="cargarResumen()">
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="resumen-contenido">
+        <div class="loading">🔄 Cargando datos...</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
